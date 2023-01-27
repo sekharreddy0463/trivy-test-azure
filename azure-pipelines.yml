@@ -3,7 +3,6 @@
 # Add steps that build, run tests, deploy, and more:
 # https://aka.ms/yaml
 
-name: $(SourceBranchName)-$(Date:yyyyMMdd)$(Rev:.r)
 
 trigger:
 - master
@@ -21,6 +20,12 @@ steps:
     sudo dpkg -i trivy_$(trivyVersion)_Linux-64bit.deb
     trivy -v
   displayName: 'Download and install Trivy'
+- task: DockerInstaller@0
+  inputs:
+      dockerVersion: '17.09.0-ce'
+- task: CmdLine@2
+  inputs:
+          script: 'docker pull java'
 - task: CmdLine@2
   inputs:
       script: |
@@ -28,4 +33,4 @@ steps:
           displayName: "Run trivy scan"
           inputs:
             script: |
-              trivy image chandra635313/spring-boot-mongo
+              trivy image java
