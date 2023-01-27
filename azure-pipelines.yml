@@ -28,4 +28,4 @@ steps:
           displayName: "Run trivy scan"
           inputs:
             script: |
-              trivy image tomcat
+              trivy image chandra635313/spring-boot-mongo
